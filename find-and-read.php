@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Finds and reads a specific file throughout the directory, and subdirectories.
+	 * Reads specific files throughout the entire directory, and subdirectories.
 	 *
 	 * PHP version 5
 	 *
@@ -16,27 +16,31 @@
 	 * @copyright  2018 Steven Soriano
 	 */
 
-
-	/*********INITIALIZATION*********/
 	ini_set('max_execution_time', 3000);
-	$path = getcwd();				 //Path to get all subdirectories and contents
-	$target = "error_log";			 //Target file to find (!full file name including extension)
-	main($path, $target);			 //Main function
-	/********************************/
+
+	//Path to get all subdirectories and contents
+	$path = getcwd();				 				
+	//Target file to find (!full file name including extension)
+	$target = "error_log";							
+
+	//Run script
+	//@param string $path Path of the directory to be scanned.
+	//@param string/array $target filename/filename array of target file/s.
+	main($path, $target);						
 
 	function scan_file($fpath){
 		$FILE = fopen($fpath, "r");
-		if($FILE){
-			echo $fpath . "\n";
-			while(!feof($FILE)){
-				$line = fgets($FILE);
-				echo $line;
-			}
-			echo "END OF FILE " . $fpath . "\n\n";
-			fclose($FILE);
-			//recreate_file($fpath); /*RECREATES FILE AFTER READING*/
-			//delete_file($fpath); 	 /*DELETES FILE AFTER READING*/
+		echo "FILE START " . $fpath . "\n";
+		
+		while (!feof($FILE)) {
+			$line = fgets($FILE);
+			echo $line;
 		}
+		
+		echo "END OF FILE " . $fpath . "\n\n";
+		fclose($FILE);
+		//recreate_file($fpath); /*RECREATES FILE AFTER READING*/
+		//delete_file($fpath); 	 /*DELETES FILE AFTER READING*/
 	}
 
 	function recreate_file($fpath){
@@ -48,7 +52,7 @@
 		unset($fpath);
 	}
 
-	function get_dir_contents($dir, &$results = array()){
+	function get_dir_contents($dir, $results = array()){
 	    $files = scandir($dir);
 
 	    foreach($files as $key => $value){
@@ -63,13 +67,29 @@
 	    return $results;
 	}
 
-	function main($path, $target){
-		foreach (get_dir_contents($path) as $file) {
-			if(basename($file) == $target){
-				scan_file($file);
-			}else{
-				continue;
+	/**
+	*@param string $path Path of the directory to be scanned.
+	*@param string/array $target filename/filename array of target file/s.
+	*/
+	function main(){
+		if(func_num_args() != 0){
+			$path = func_get_arg(0);
+			$target = func_get_arg(1);
+			foreach (get_dir_contents($path) as $file) {
+				if(is_array($target)){
+					if(in_array(basename($file), $target))
+						scan_file($file);
+					else
+						continue;
+				}else{
+					if(basename($file) == $target)
+						scan_file($file);
+					else
+						continue;
+				}
 			}
+		}else{
+			echo "Invalid argument/s";
 		}
 	}
  ?>
