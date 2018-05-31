@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Reads specific files throughout the entire directory, and subdirectories.
+	 * PHP script that finds and reads target file/s throughout the directory, and subdirectories.
 	 *
 	 * PHP version 5
 	 *
@@ -20,7 +20,7 @@
 
 	//Path to get all subdirectories and contents
 	$path = getcwd();				 				
-	//Target file to find (!full file name including extension)
+	//Target file to find (!full file name including extension, can be array of filenames or a string literal)
 	$target = "error_log";							
 
 	//Run script
