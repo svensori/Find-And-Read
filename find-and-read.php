@@ -28,7 +28,8 @@
 		$FILE = fopen($fpath, "r");
 		if($FILE){
 			echo $fpath . "\n";
-			while(($line = fgets($FILE)) !== FALSE){
+			while(!feof($FILE)){
+				$line = fgets($FILE);
 				echo $line;
 			}
 			echo "END OF FILE " . $fpath . "\n\n";
