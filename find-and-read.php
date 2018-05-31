@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Reads specific files throughout the entire directory, and subdirectories.
+	 * Finds and reads a specific file throughout the directory, and subdirectories.
 	 *
 	 * PHP version 5
 	 *
