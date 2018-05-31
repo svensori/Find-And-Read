@@ -1,2 +1,2 @@
 # Find-And-Read
-PHP script that reads specific files throughout the entire directory, and subdirectories.
+PHP script that find and reads a specific file throughout the directory, and subdirectories.
