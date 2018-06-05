@@ -72,24 +72,30 @@
 	*@param string/array $target filename/filename array of target file/s.
 	*/
 	function main(){
-		if(func_num_args() != 0){
+		if(func_num_args() == 2){
 			$path = func_get_arg(0);
 			$target = func_get_arg(1);
-			foreach (get_dir_contents($path) as $file) {
-				if(is_array($target)){
-					if(in_array(basename($file), $target))
-						scan_file($file);
-					else
-						continue;
-				}else{
-					if(basename($file) == $target)
-						scan_file($file);
-					else
-						continue;
+			if(gettype($path) == 'string' && gettype($target) == 'string'){
+				foreach (get_dir_contents($path) as $file) {
+					if(is_array($target)){
+						if(in_array(basename($file), $target))
+							scan_file($file);
+						else
+							continue;
+					}else{
+						if(basename($file) == $target)
+							scan_file($file);
+						else
+							continue;
+					}
 				}
+			}else{
+				echo "Function only accepts param1 as string and param2 as string/array.";
 			}
+		}elseif(func_num_args() > 2){
+			echo "Function only accepts 2 parameters more than 2 given.";
 		}else{
-			echo "Invalid argument/s";
+			echo "Invalid supplied argument/s.";
 		}
 	}
  ?>
